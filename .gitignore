@@ -4,10 +4,8 @@ __pycache__/
 *$py.class
 
 # Virtual environments
-venv/
 .venv/
 env/
-ENV/
 
 # Environment variables
 .env
@@ -15,7 +13,6 @@ ENV/
 
 # Flask
 instance/
-.flaskenv
 
 # SQLite databases
 *.db
@@ -48,15 +45,6 @@ htmlcov/
 
 # PyCharm
 .idea/
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-
-# Docker
-*.pid
 
 # Secrets
 *.pem
