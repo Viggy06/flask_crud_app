@@ -4,3 +4,6 @@ README.md
 .git
 docker-compose.yml
 app.log
+
+# Flask
+instance/
