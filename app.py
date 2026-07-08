@@ -9,6 +9,8 @@ from sqlalchemy.exc import SQLAlchemyError
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    filename="app.log",
+    filemode="a" #append
 )
 
 logger = logging.getLogger(__name__)
@@ -32,7 +34,7 @@ class Item(db.Model):
 
 with app.app_context():
     db.create_all()
-    logger.info("Database initialized successfully")
+    logger.info("LOGS - Database initialized successfully")
 
 @app.route("/items", methods=["GET"])
 def get_items():
