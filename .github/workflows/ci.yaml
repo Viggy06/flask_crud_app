@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-    name: Building docker image
     runs-on: ubuntu-latest #runner environment
 
     steps:
@@ -16,14 +15,18 @@ jobs:
       - name: Build Docker Image
         run: docker build -t flask_crud_app:${{ github.sha }} .
   
-      - name: Validate docker image
-        run: docker run -d --name flask_crud_app_container flask_crud_app:${{ github.sha }}
+      - name: Running the docker image
+        run: docker run -d -p 5000:5000 --name flask_crud_app_container flask_crud_app:${{ github.sha }}
 
-      - name: Waiting 5 sec for image run
+      - name: Waiting 5 seconds for application startup
         run: sleep 5
 
-      - name: Validating Image by health check API
+      - name: Validating Image by health check API      #validating image using heakth check API
         run: curl --fail http://localhost:5000/health
+      
+      - name: Cleanup
+        if: always() #will run even if the previous step fails
+        run: docker stop flask_crud_app_container && docker rm flask_crud_app_container
 
 
 
