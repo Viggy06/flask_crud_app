@@ -22,6 +22,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 
 db = SQLAlchemy(app)
 
+#Initialize the database and create the Item model
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -36,13 +37,14 @@ with app.app_context():
     db.create_all()
     logger.info("LOGS - Database initialized successfully")
 
+#Get All Items API
 @app.route("/items", methods=["GET"])
 def get_items():
     items = Item.query.all()
     logger.info("Fetching all items")
     return jsonify([item.to_dict() for item in items])
 
-
+#Create a New ITEM POST API
 @app.route("/items", methods=["POST"])
 def create_item():
     try:
@@ -70,7 +72,7 @@ def create_item():
         logger.error("An unexpected error occurred", exc_info=True)
         return jsonify({"error": str(e)}), 500
     
-
+#Update a Existing ITEM PUT API
 @app.route("/items/<int:item_id>", methods=["PUT"])
 def update_item(item_id):
     try:
@@ -98,7 +100,7 @@ def update_item(item_id):
         logger.error("An unexpected error occurred", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
-
+#Delete ITEM DELETE API
 @app.route("/items/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
     try:
