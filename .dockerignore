@@ -1,8 +1,13 @@
 .env
+env
+
 .gitignore
-README.md
 .git
+
+README.md
+
 docker-compose.yml
+
 app.log
 
 # Flask

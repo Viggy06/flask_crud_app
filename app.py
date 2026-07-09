@@ -22,6 +22,15 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 
 db = SQLAlchemy(app)
 
+
+#Health Check API
+@app.route("/health", methods=["GET"])
+def health_check():
+    logger.info("LOGS - Health Check Working!")
+    return jsonify({"Status": "Successful"}) , 200
+
+
+
 #Initialize the database and create the Item model
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
