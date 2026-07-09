@@ -22,7 +22,7 @@ jobs:
         run: sleep 5
 
       - name: Validating Image by health check API      #validating image using heakth check API
-        run: curl --fail http://localhost:5000/health
+        run: curl --fail http://localhost:5000/healthz
       
       - name: Cleanup
         if: always() #will run even if the previous step fails
