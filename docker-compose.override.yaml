@@ -1,0 +1,6 @@
+services:
+  flask_crud_app_v1:
+    ports:
+      - "5000:5000"
+
+  

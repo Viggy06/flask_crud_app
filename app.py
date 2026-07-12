@@ -1,6 +1,9 @@
 import logging
+import os
+from dotenv import load_dotenv
+from flask import render_template
 
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -17,8 +20,9 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-# SQLite database
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+load_dotenv() #will load the environment variables from the .env file
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
 db = SQLAlchemy(app)
 
@@ -30,6 +34,11 @@ def health_check():
     return jsonify({"Status": "Successful"}) , 200
 
 
+
+
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
 #Initialize the database and create the Item model
 class Item(db.Model):
@@ -43,6 +52,7 @@ class Item(db.Model):
         }
 
 with app.app_context():
+    print("DB URI:", app.config["SQLALCHEMY_DATABASE_URI"])
     db.create_all()
     logger.info("LOGS - Database initialized successfully")
 
